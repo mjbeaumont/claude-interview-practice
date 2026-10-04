@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "p": "node --no-warnings --experimental-transform-types",
+    "w": "node --no-warnings --experimental-transform-types --watch"
+  }
+}

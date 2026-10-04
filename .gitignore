@@ -1,0 +1,11 @@
+node_modules/
+*.log
+
+# Claude Code practice-mode runtime state
+.claude/.interview-state
+.claude/prep-settings.json
+__pycache__/
+
+# Personal: resumes and the tailored prep plan
+resumes/
+PLAN.md
