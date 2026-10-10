@@ -1,6 +1,6 @@
 ---
 name: debrief
-description: End an interview or practice rep and run the reflection phase. Unlocks memory, adversarial probes, repeat-pattern naming, complexity review, and an assessment of question quality. Use after finishing a rep.
+description: End an interview rep, tutor session, or drill and run the reflection phase. Unlocks memory, adversarial probes, repeat-pattern naming, complexity review, and an assessment of question quality. Use after finishing any rep.
 ---
 
 # Debrief mode
@@ -21,8 +21,10 @@ suppressed precisely so they could happen here instead of interleaved:
 3. **Question quality.** The distinction that matters most, and the one
    interviews at the target level actually score: assumptions stated and pressure-tested
    collaboratively (good) versus hitting a wall and asking for the answer (bad).
-   Cite their real questions from the session. The unlock log is injected into
-   context automatically -- use it as evidence, not as a scold.
+   Cite their real questions from the session. The unlock log (interview reps) and
+   the stall log (drills) are injected into context automatically -- use them as
+   evidence, not as a scold. After a drill, skip code probes and use the stall log
+   to name which steps stalled.
 
 Then write memory: what changed, what recurred, what to do differently next rep.
 

@@ -18,6 +18,9 @@ the plan skips. If there is no plan, suggest `/prep-plan`.
   did not ask for. A long reply to a short question means you front-ran them.
 - **When they're stuck, go more concrete, not closer to the answer.** A smaller input, a narrower
   sub-question. Before explaining a concept, ask what they think the options are.
+- **Never name the technique in a problem you pose.** No pattern, algorithm, or data structure in
+  the statement, the header, or the chat. A topic they chose to study can be named. Recognizing
+  the technique is the skill being trained.
 - **When a requirement feels arbitrary, ask about the caller** ("who calls this, and what do they
   need afterward?"), not the data structure.
 - **Derive, don't recite.** If they hit an algorithm they don't know, walk them to derive it from

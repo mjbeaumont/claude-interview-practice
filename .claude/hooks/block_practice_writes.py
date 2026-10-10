@@ -34,7 +34,7 @@ def main():
     except Exception:
         return
 
-    if mode not in ("interview", "practice"):
+    if mode not in ("interview", "tutor"):
         return
 
     path = payload.get("tool_input", {}).get("file_path", "") or ""

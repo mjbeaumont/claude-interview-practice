@@ -34,7 +34,7 @@ Once they confirm, write `.claude/prep-settings.json`, keeping any keys already 
 { "level": "senior", "company": "mid-size product", "role": "full-stack" }
 ```
 
-`/interview` and `/practice` read the level from this file.
+`/interview` reads the level from this file.
 
 ## 2. Diagnostic
 
@@ -73,7 +73,7 @@ Write `PLAN.md` with:
   BFS and DFS from scratch five times, then eight graph problems from easy").
 - **Skip list**: what this target doesn't test, and why. This is as important as the priorities.
 - **Timeline**: a week-by-week outline that fits the stated hours.
-- **First rep**: the problem to start with, suitable for `/practice`.
+- **First rep**: the problem to start with, suitable for an assisted `/interview` rep or a `/tutor` session.
 
-Show the plan as text and get a yes before writing it. Afterward, point them to `/practice` for
-the first rep.
+Show the plan as text and get a yes before writing it. Afterward, point them to `/tutor` or an
+assisted `/interview` for the first rep.

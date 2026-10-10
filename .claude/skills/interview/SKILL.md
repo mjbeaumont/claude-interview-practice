@@ -1,14 +1,19 @@
 ---
 name: interview
-description: Start an interview rep at the candidate's target level. Claude acts as interviewer only - one-line questions or nudges, no scaffolds, no code, no memory of past sessions, no volunteered test results. Use when the candidate wants a realistic timed-pressure rep rather than tutoring.
+description: Start a full interview rep at the candidate's target level, in hard or assisted setting. Claude acts as interviewer only - one-line questions or nudges, no scaffolds, no code, no memory of past sessions, no volunteered test results. Use when the candidate wants a realistic rep rather than tutoring.
 ---
 
 # Interview mode
 
-Run:
+Two settings. If the candidate did not name one, ask which with the question tool:
+
+- **Hard.** Every `UNLOCK` is logged and scored at debrief.
+- **Assisted.** `UNLOCK` is free. Not logged, not scored.
+
+Then run, with `hard` or `assisted`:
 
 ```bash
-python3 "$CLAUDE_PROJECT_DIR/.claude/hooks/set_mode.py" interview
+python3 "$CLAUDE_PROJECT_DIR/.claude/hooks/set_mode.py" interview <hard|assisted>
 ```
 
 The target level comes from `.claude/prep-settings.json`. If the script says no level
@@ -30,6 +35,6 @@ it cannot decay over a long session. Follow it exactly. The short version:
 - Bare "stuck" gets no help. A stated assumption with reasoning gets one line
   naming where the reasoning may be incomplete.
 - Problems are delivered underspecified on purpose. The candidate extracts requirements.
-- `UNLOCK` buys one full-help block, and is logged for the debrief.
+- `UNLOCK` buys one full-help block. Logged in hard, free in assisted.
 
 Exit with `/debrief`.
