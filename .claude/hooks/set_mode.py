@@ -2,7 +2,7 @@
 """Set the active mode, or the candidate's target level.
 
 Usage: set_mode.py interview hard|assisted
-       set_mode.py drill recognition|invariant
+       set_mode.py drill recognition|invariant assisted|hard
        set_mode.py tutor|debrief|off
        set_mode.py level <level>   (e.g. senior, staff; saved to prep-settings.json)
        set_mode.py stall <step> <problem> <note>   (log a step the candidate stalled on)
@@ -17,6 +17,7 @@ CHOICES = {
     "interview": ("hard", "assisted"),
     "drill": ("recognition", "invariant"),
 }
+DRILL_HELP = ("assisted", "hard")
 
 
 def load(path):
@@ -67,6 +68,12 @@ if mode in CHOICES:
     if setting not in CHOICES[mode]:
         sys.exit("usage: set_mode.py %s %s" % (mode, "|".join(CHOICES[mode])))
 
+help_level = None
+if mode == "drill":
+    help_level = (sys.argv[3] if len(sys.argv) > 3 else "").strip().lower()
+    if help_level not in DRILL_HELP:
+        sys.exit("usage: set_mode.py drill %s %s" % ("|".join(CHOICES["drill"]), "|".join(DRILL_HELP)))
+
 if mode == "interview" and not load(SETTINGS).get("level"):
     sys.exit("no level set. Run /prep-plan, or: set_mode.py level <level>")
 
@@ -76,7 +83,7 @@ state = load(STATE)
 if mode == "interview":
     state = {"unlocks": [], "setting": setting}
 elif mode == "drill":
-    state = {"stalls": [], "setting": setting}
+    state = {"stalls": [], "unlocks": [], "setting": setting, "help": help_level}
 elif mode in ("tutor", "off"):
     state = {}
 
@@ -84,4 +91,5 @@ state["mode"] = mode
 state["since"] = datetime.datetime.now().isoformat(timespec="seconds")
 
 save(STATE, state)
-print("mode: %s%s" % (mode, " (%s)" % setting if setting else ""))
+label = ", ".join(x for x in (setting, help_level) if x)
+print("mode: %s%s" % (mode, " (%s)" % label if label else ""))

@@ -122,10 +122,7 @@ RESPONSE FORM
 - One question per turn. Never ask two things.
 - Correct a wrong fact at once and briefly: a miscount, a wrong cost, a wrong definition.
 - If the conclusion is right and the reason is wrong, say so and ask for the reason.
-- Never give the answer to a step. If the candidate is stuck, use real numbers from
-  the example, then ask a yes or no question.
-- If the candidate says "tell me why", give a short explanation with real numbers.
-  Then give a method to avoid the stall.
+- Never give the answer to a step.
 - Fresh material only. Never use a problem or code from the repo's practice or
   solutions files.
 - Show code only if the candidate asks after the rep ends.
@@ -139,6 +136,27 @@ STALL LOG
 - Do not tell the candidate you logged it.
 
 Pitch material at the target level: {LEVEL}. Exit only via /debrief.
+"""
+
+DRILL_ASSISTED = """
+HELP LEVEL: ASSISTED
+- If the candidate is stuck, use real numbers from the example, then ask a yes or no question.
+- If the candidate says "tell me why", give a short explanation with real numbers.
+  Then give a method to avoid the stall.
+"""
+
+DRILL_HARD = """
+HELP LEVEL: HARD
+- One line per turn. A question or a correction, never both.
+- Never use numbers from the example to guide a step. Never ask a leading yes or no question.
+- Correct a wrong fact by naming the wrong claim. Do not give the right value or the fix.
+- Ignore bare "stuck", "lost", "no idea". Ask what they tried and what they think is happening.
+- Respond to a stated assumption with reasoning in one line that names where the reasoning
+  may be incomplete. Never name the fix.
+- If the candidate says "tell me why", do not explain. Ask what they think the options are.
+- The literal token UNLOCK buys one full-help block at the depth the candidate names.
+  Hard rules resume immediately after that one block.
+- Every UNLOCK is logged and shown at /debrief next to the stall log.
 """
 
 DRILL_RECOGNITION = """
@@ -193,6 +211,7 @@ naming with sighting counts, complexity review, and the logs below.
 
 After an interview rep, probe the code beyond the candidate's tests.
 After a drill rep, skip code probes. Use the stall log to name which steps stalled.
+In a hard drill, also use the UNLOCK log.
 After a tutor session, summarize what the candidate derived and what they were told.
 
 Assess question quality explicitly, not just correctness. Distinguish stated
@@ -204,7 +223,7 @@ Ends when the candidate says so. Set mode off with:
   python3 .claude/hooks/set_mode.py off"""
 
 
-def build(mode, setting):
+def build(mode, setting, help_level="assisted"):
     if mode == "interview":
         unlock = UNLOCK_HARD if setting == "hard" else UNLOCK_ASSISTED
         return ("INTERVIEW MODE ACTIVE (%s)\n\n"
@@ -214,7 +233,9 @@ def build(mode, setting):
         return TUTOR + CLARITY
     if mode == "drill":
         content = DRILL_INVARIANT if setting == "invariant" else DRILL_RECOGNITION
-        return DRILL_COMMON.replace("{SETTING}", setting) + content + CLARITY
+        help_block = DRILL_HARD if help_level == "hard" else DRILL_ASSISTED
+        return (DRILL_COMMON.replace("{SETTING}", "%s, %s" % (setting, help_level))
+                + help_block + content + CLARITY)
     if mode == "debrief":
         return DEBRIEF + CLARITY + SELF_CHECK
     return None
@@ -239,12 +260,17 @@ def main():
         setting = "hard"
     if mode == "drill" and setting not in ("recognition", "invariant"):
         setting = "recognition"
+    help_level = state.get("help")
+    if help_level not in ("assisted", "hard"):
+        help_level = "assisted"
 
-    out = build(mode, setting)
+    out = build(mode, setting, help_level)
     if out is None:
         return
 
-    if mode == "interview" and setting == "hard" and "UNLOCK" in prompt:
+    hard_unlock = ((mode == "interview" and setting == "hard")
+                   or (mode == "drill" and help_level == "hard"))
+    if hard_unlock and "UNLOCK" in prompt:
         state.setdefault("unlocks", []).append({
             "at": datetime.datetime.now().isoformat(timespec="seconds"),
             "prompt": prompt[:400],

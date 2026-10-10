@@ -5,16 +5,25 @@ description: Short reps on one skill. Content types are recognition (walk a fres
 
 # Drill mode
 
-One mode, with a content type. If the candidate did not name one, ask which with the
-question tool:
+One mode, with two settings. If the candidate did not name them, ask both in one
+question tool call.
+
+Content type:
 
 - **Recognition.** Brute force to technique, five steps.
 - **Invariant.** State the invariant, or trace to the first false row.
 
-Then run, with `recognition` or `invariant`:
+Help level:
+
+- **Assisted.** Concrete numbers and yes or no questions when stuck. A short
+  explanation on "tell me why".
+- **Hard.** One line per turn. No hints. Bare "stuck" gets no help. `UNLOCK` buys one
+  full-help block and is logged for debrief.
+
+Then run, with the content type and the help level:
 
 ```bash
-python3 "$CLAUDE_PROJECT_DIR/.claude/hooks/set_mode.py" drill <recognition|invariant>
+python3 "$CLAUDE_PROJECT_DIR/.claude/hooks/set_mode.py" drill <recognition|invariant> <assisted|hard>
 ```
 
 For recognition, read `patterns.md` in this skill's directory. Do not read it aloud or
@@ -31,4 +40,4 @@ from `/interview` on purpose. Facts get corrected, and the frame is visible.
 To add a content type, add its rule block to the hook and its name to the mode script.
 The skill needs no other change.
 
-Exit with `/debrief`. Debrief reads the stall log.
+Exit with `/debrief`. Debrief reads the stall log, and the UNLOCK log in a hard drill.
