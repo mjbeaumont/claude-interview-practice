@@ -25,7 +25,7 @@ Four slash commands then turn Claude into an interviewer, tutor, or drill partne
 
 - `/interview`: a realistic rep at your target level, in a hard or assisted setting (it asks). Claude gives an underspecified problem and replies in one line at a time. It gives no code and no hints, and it doesn't volunteer test results. Typing `UNLOCK` buys one block of full help. In hard it is logged for the debrief. In assisted it is free.
 - `/tutor`: a deep dive on a topic you choose. You drive, hints are one sentence, and Claude never names the technique in a problem it poses.
-- `/drill`: short reps on one skill. Content types are recognition (brute force to technique in five steps) and invariant (state what each variable promises, or trace a loop to its first false row).
+- `/drill`: short reps on one skill. Content types are recognition (what you are given to technique in six steps) and invariant (state what each variable promises, or trace a loop to its first false row).
 - `/debrief`: ends the rep. Claude reviews correctness with extra edge cases, names recurring mistakes, and assesses the quality of your questions, using the unlock and stall logs as evidence.
 
 While an interview or tutor session is active, a hook blocks Claude from editing `*.practice.ts` files, so you write the code. The rules are re-injected every turn so they don't fade over a long session. The mode lives in `.claude/.interview-state` (gitignored); `/debrief` resets it, or run `python3 .claude/hooks/set_mode.py off`. Your target level lives in `.claude/prep-settings.json` (gitignored). `/prep-plan` sets it, or run `python3 .claude/hooks/set_mode.py level senior`.

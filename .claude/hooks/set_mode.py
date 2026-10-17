@@ -2,7 +2,7 @@
 """Set the active mode, or the candidate's target level.
 
 Usage: set_mode.py interview hard|assisted
-       set_mode.py drill recognition|invariant assisted|hard
+       set_mode.py drill recognition|invariant|concept assisted|hard
        set_mode.py tutor|debrief|off
        set_mode.py level <level>   (e.g. senior, staff; saved to prep-settings.json)
        set_mode.py stall <step> <problem> <note>   (log a step the candidate stalled on)
@@ -15,7 +15,7 @@ SETTINGS = os.path.join(ROOT, "prep-settings.json")
 VALID = ("interview", "tutor", "drill", "debrief", "off")
 CHOICES = {
     "interview": ("hard", "assisted"),
-    "drill": ("recognition", "invariant"),
+    "drill": ("recognition", "invariant", "concept"),
 }
 DRILL_HELP = ("assisted", "hard")
 

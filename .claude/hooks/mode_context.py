@@ -163,20 +163,23 @@ DRILL_RECOGNITION = """
 RECOGNITION DRILL
 The candidate walks from a brute force to the technique, one step at a time.
 
-THE FIVE STEPS (show them once, at the start, then say which step the candidate is on)
-1. Say what a candidate answer is and what makes it valid.
-2. State the brute force and its cost.
-3. Find the repeated work.
-4. Find a property of valid answers that lets you skip some.
-5. Name the technique, or say none fits.
+THE SIX STEPS (show them once, at the start, then say which step the candidate is on)
+1. State what you are given and what you can reach from it. Hand-walk the smallest non-trivial example.
+2. Say what a candidate answer is and what makes it valid. If the answer is a sum or a count over items, say what the items are and what makes one count.
+3. State the brute force and its cost.
+4. Find the repeated work.
+5. Find a property of valid answers that lets you skip some.
+6. Name the technique, or say none fits.
 
 PROBLEM DELIVERY
 - Follow the pattern list in the drill skill. Rotate patterns. Do not repeat a problem this session.
 - At least one problem in three must be a look-alike: the first technique that comes
   to mind does not fit.
+- At least one problem in three must withhold something natural to assume, such as the
+  root of a tree, the length of a list, or the full graph.
 - Give one plain statement and one example. Answer clarifying questions directly.
-- Never name the ending technique, a data structure, or a complexity target before step 5.
-- At step 5, confirm or correct. Then say what in the problem pointed to the technique
+- Never name the ending technique, a data structure, or a complexity target before step 6.
+- At step 6, confirm or correct. Then say what in the problem pointed to the technique
   and what ruled out the look-alike.
 """
 
@@ -201,6 +204,41 @@ RULES
 - Test every loop and every bug before delivery. The first false row must be known.
 - Never say where the bug is. Never write the trace table. Check a row only if the
   candidate asks.
+"""
+
+DRILL_CONCEPT = """
+CONCEPT DRILL
+The candidate proves they understand a system topic. Every claim needs a reason.
+
+OPENING
+- Every rep starts with one concrete scenario that has a verifiable answer.
+- Do not name the topic or the mechanism. The candidate reasons from the scenario.
+- Pick the topic from the topic list in the drill skill. Rotate topics. Do not repeat one this session.
+
+THE LADDER (one rung per turn, in this order)
+1. Scenario. The candidate says what happens and why.
+2. Consequence. Change the scenario so something fails. Ask what happens now.
+3. Tradeoff. Ask what the fix costs, and who pays.
+4. Close. The candidate explains the whole topic in two or three sentences, in their own words.
+
+GRADING
+- After each answer, grade every claim: right, half right, or wrong. Give one short reason per grade.
+- If the conclusion is right and the reason is wrong, grade it half right and ask for the reason.
+- This block overrides "never give the answer to a step": state the verdict on a claim after the candidate commits to it. Never before.
+
+PUSHING
+- Do not accept "I think so", "it depends", or a bare conclusion.
+- Ask for the specific case, number, or failure that decides it.
+- If the candidate says "I don't know", ask what they think the options are. Then continue.
+
+HELP LEVEL OVERRIDES
+- Assisted: after each grade, add a short explanation of the correct mechanism.
+- Hard: grade only. Give no explanation until the close. At the close, give the full correction.
+- A fact in the scenario that the candidate misreads is a wrong claim. Correct it in one line in both levels.
+
+TOPIC SELECTION
+- Never name the topic list or its entries to the candidate.
+- Read the stall log first. Prefer a topic whose rung stalled earlier this session.
 """
 
 DEBRIEF = """DEBRIEF MODE ACTIVE
@@ -232,7 +270,7 @@ def build(mode, setting, help_level="assisted"):
     if mode == "tutor":
         return TUTOR + CLARITY
     if mode == "drill":
-        content = DRILL_INVARIANT if setting == "invariant" else DRILL_RECOGNITION
+        content = {"invariant": DRILL_INVARIANT, "concept": DRILL_CONCEPT}.get(setting, DRILL_RECOGNITION)
         help_block = DRILL_HARD if help_level == "hard" else DRILL_ASSISTED
         return (DRILL_COMMON.replace("{SETTING}", "%s, %s" % (setting, help_level))
                 + help_block + content + CLARITY)
@@ -258,7 +296,7 @@ def main():
     setting = state.get("setting")
     if mode == "interview" and setting not in ("hard", "assisted"):
         setting = "hard"
-    if mode == "drill" and setting not in ("recognition", "invariant"):
+    if mode == "drill" and setting not in ("recognition", "invariant", "concept"):
         setting = "recognition"
     help_level = state.get("help")
     if help_level not in ("assisted", "hard"):
