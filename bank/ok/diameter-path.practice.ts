@@ -1,12 +1,11 @@
-// Longest Univalue Path (LC 687).
+// Diameter of Binary Tree (LC 543).
 //
-// Return the length of the longest path where every node on the path has the
-// same value. The path may or may not pass through the root. Length is counted
-// in EDGES, not nodes.
-//   [5,4,5,1,1,null,5]  ->  2   (the three 5s: 5 - 5 - 5)
-//   [1,4,5,4,4,null,5]  ->  2   (the three 4s)
-//   [1]                 ->  0
-//   []                  ->  0
+// Return the length of the longest path between any two nodes. The path may or
+// may not pass through the root. Length is counted in EDGES, not nodes.
+//   [1,2,3,4,5]  ->  3
+//   [1,2]        ->  1
+//   [1]          ->  0
+//   []           ->  0
 
 class TreeNode {
   val: number;
@@ -19,7 +18,7 @@ class TreeNode {
   }
 }
 
-function longestUnivaluePath(root: TreeNode | null): number {
+function diameterOfBinaryTree(root: TreeNode | null): number {
 
 }
 
@@ -46,19 +45,14 @@ function build(vals: (number | null)[]): TreeNode | null {
 }
 
 const cases: { vals: (number | null)[]; expected: number }[] = [
-  { vals: [5, 4, 5, 1, 1, null, 5], expected: 2 },
-  { vals: [1, 4, 5, 4, 4, null, 5], expected: 2 },
+  { vals: [1,2,3,4,5], expected: 3 },
+  { vals: [1,2], expected: 1 },
   { vals: [1], expected: 0 },
   { vals: [], expected: 0 },
-  { vals: [1, null, 1, null, 1, null, 1], expected: 3 },
-  { vals: [2, 2, 2, 2, null, 2], expected: 4 },
-  { vals: [1, 2, 2, 2, 2], expected: 2 },
-  { vals: [4, 4, 4, 4, 4, 4, 4], expected: 4 },
-  { vals: [1, 2, 3], expected: 0 },
 ];
 
 cases.forEach(({ vals, expected }) => {
-  const actual = longestUnivaluePath(build(vals));
+  const actual = diameterOfBinaryTree(build(vals));
   const pass = actual === expected;
-  console.log(`${pass ? '✓' : '✗'} longestUnivaluePath(${JSON.stringify(vals)}) = ${actual} (exp ${expected})`);
+  console.log(`${pass ? '✓' : '✗'} diameterOfBinaryTree(${JSON.stringify(vals)}) = ${actual} (exp ${expected})`);
 });

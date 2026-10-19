@@ -1,8 +1,10 @@
 # Interview practice
 
-- `algo/`: blank algorithm scaffolds
-- `lld/`: blank low-level design scaffolds
-- `solutions/`: worked solutions, same layout
+- `bank/`: blank scaffolds for the Meta problem list, sorted into buckets: `solid`, `ok`, `rough`, `new`
+- `work/`: your working copy (gitignored), filled by `pnpm fresh`
+- `lib/`: shared code that practice files import, such as the priority queue
+- `archive/`: scaffolds outside the Meta list (general algorithms and low-level design), kept blank
+- `solutions/`: worked solutions for the original scaffolds
 
 Each file is self-contained: a problem description, an empty body, and a test harness at the bottom.
 
@@ -11,11 +13,15 @@ Each file is self-contained: a problem description, an empty body, and a test ha
 Needs Node >= 22.18 (runs TypeScript natively, no install step).
 
 ```sh
-pnpm p algo/coin-change.practice.ts   # run once
-pnpm w algo/coin-change.practice.ts   # rerun on save
+pnpm bank                                # list every bucket
+pnpm fresh vertical-order                # copy a blank into work/ (always overwrites; a unique partial name works)
+pnpm p work/vertical-order.practice.ts   # run once
+pnpm w work/vertical-order.practice.ts   # rerun on save
+pnpm bucket vertical-order rough         # re-sort a blank: solid | ok | rough | new
+pnpm clear                               # empty work/
 ```
 
-The message queue's tests live in `lld/message-queue.harness.ts`; run that file instead of the practice file.
+Solve in `work/`, never in `bank/`, so the buckets stay blank. After a problem, re-sort it with `pnpm bucket`, then use `pnpm bank` to pick the weakest for the next cold redo.
 
 ## Practicing with Claude Code
 

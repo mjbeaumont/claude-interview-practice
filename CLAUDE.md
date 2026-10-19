@@ -50,7 +50,7 @@ When they're stuck on the last few percent (off-by-ones, missing state, boundari
 
 ## Repo conventions
 
-- Problems are `*.practice.ts` in `algo/` and `lld/`; reference answers are in `solutions/`.
+- Problems are blank `*.practice.ts` scaffolds in `bank/<bucket>/`; the candidate works in `work/` (`pnpm fresh <name>`). `archive/` holds problems outside the Meta list; reference answers are in `solutions/`.
   Don't read `solutions/` into the conversation unless asked.
 - The candidate writes practice files. A hook blocks your edits to them.
 - New scaffolds: a header that states the problem, a typed signature with an empty body, and a

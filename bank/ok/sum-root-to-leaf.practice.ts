@@ -53,6 +53,14 @@ const cases: { vals: (number | null)[]; expected: number }[] = [
   { vals: [0, 1], expected: 1 },
   { vals: [1, 2, 3, 4, 5, 6, 7], expected: 522 },
   { vals: [1, null, 2, null, 3, null, 4], expected: 1234 },
+  { vals: [0], expected: 0 },
+  { vals: [1, 2], expected: 12 },
+  { vals: [1, null, 2], expected: 12 },
+  { vals: [1, 0], expected: 10 },
+  { vals: [1, null, 3, null, 4, 5], expected: 1345 },
+  { vals: [1, 2, 5, 9], expected: 144 },
+  { vals: [0, 1, 3], expected: 4 },
+  { vals: [1, 2, null, 3, null, 4, null, 5, null, 6, null, 7, null, 8, null, 9, null, 0], expected: 1234567890 },
 ];
 
 cases.forEach(({ vals, expected }) => {

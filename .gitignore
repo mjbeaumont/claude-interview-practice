@@ -9,3 +9,7 @@ __pycache__/
 # Personal: resumes and the tailored prep plan
 resumes/
 PLAN.md
+
+# Practice working copies and local solved-file snapshot
+work/
+backup/

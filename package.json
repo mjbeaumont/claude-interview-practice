@@ -6,6 +6,10 @@
   },
   "scripts": {
     "p": "node --no-warnings --experimental-transform-types",
-    "w": "node --no-warnings --experimental-transform-types --watch"
+    "w": "node --no-warnings --experimental-transform-types --watch",
+    "fresh": "node scripts/bank.mjs fresh",
+    "clear": "node scripts/bank.mjs clear",
+    "bucket": "node scripts/bank.mjs bucket",
+    "bank": "node scripts/bank.mjs list"
   }
 }

@@ -22,7 +22,6 @@ class TreeNode {
 function lowestCommonAncestor(root: TreeNode | null, p: TreeNode, q: TreeNode): TreeNode | null {
 
 }
-
 // ---- test harness ----
 // Builds a tree from a LeetCode-style level-order array (null = no child).
 function buildTree(arr: (number | null)[]): TreeNode | null {
@@ -62,6 +61,12 @@ const lcaCases: [(number | null)[], number, number, number][] = [
   [[3, 5, 1, 6, 2, 0, 8, null, null, 7, 4], 5, 4, 5],
   [[1, 2], 1, 2, 1],
   [[3, 5, 1, 6, 2, 0, 8, null, null, 7, 4], 6, 4, 5],
+  [[3, 5, 1, 6, 2, 0, 8, null, null, 7, 4], 4, 5, 5],
+  [[3, 5, 1, 6, 2, 0, 8, null, null, 7, 4], 7, 4, 2],
+  [[3, 5, 1, 6, 2, 0, 8, null, null, 7, 4], 6, 8, 3],
+  [[1, 2], 2, 1, 1],
+  [[1, null, 2], 1, 2, 1],
+  [[1, 2, null, 3, null, 4], 4, 2, 2],
 ];
 for (const [arr, pVal, qVal, expVal] of lcaCases) {
   const root = buildTree(arr);
