@@ -23,6 +23,19 @@ pnpm clear                               # empty work/
 
 Solve in `work/`, never in `bank/`, so the buckets stay blank. After a problem, re-sort it with `pnpm bucket`, then use `pnpm bank` to pick the weakest for the next cold redo.
 
+## Bucket criteria
+
+Judge every problem on a cold, timed rep from a fresh blank with no help. The first time you see a problem is a learning rep and does not count. The initial sort was provisional, so the first cold rep re-sorts it.
+
+| Bucket | Test |
+|---|---|
+| `solid` | All tests green in 20 minutes or less, including the opener. No failing case hit the 10-minute debug cap. No fix or approach was shown. This must happen on two different days in a row. |
+| `ok` | All tests green in 21 to 35 minutes. Or one failing case that you fixed yourself with a trace. |
+| `rough` | Any one of these: not green by 35 minutes, the debug cap hit, a fix or approach was shown, or you could not state the approach before coding. |
+| `new` | No cold rep yet. |
+
+A cold rep moves a problem one bucket up or down, and a miss drops it one bucket. Rough to ok takes one rep. Ok to solid takes two passes. End every cold rep with `pnpm bucket`, based on the clock and the test output.
+
 ## Practicing with Claude Code
 
 Start with `/prep-plan`. Claude asks about your target (level, company type, role, timeline), runs a diagnostic quiz weighted by it, and writes `PLAN.md` (gitignored): priorities, a skip list, and a timeline. `CLAUDE.md` tells Claude to read the plan and tutor Socratically.
